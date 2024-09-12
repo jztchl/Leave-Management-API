@@ -37,7 +37,6 @@ class UserRegistrationAPI(APIView):
 
 class LeaveRequest(APIView):
     permission_classes = (IsAuthenticated,)
-    @role_required('EMPLOYEE')
     def post(self, request):
         leave_data = request.data
         manager_id = leave_data.get('AssignedManager')
@@ -87,7 +86,7 @@ class Managerlistleaves(APIView):
         return Response(msg, status=status.HTTP_200_OK)
     
 
-    
+
 class ManagerApprove(APIView):
     permission_classes = (IsAuthenticated,)
 
