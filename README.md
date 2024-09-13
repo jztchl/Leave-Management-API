@@ -27,8 +27,8 @@ A Django-based Leave Management System to handle leave requests and approvals wi
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/yourusername/leave-management-system.git
-   cd leave-management-system
+   git clone https://github.com/yourusername/Leave-Management-API.git
+   cd Leave-Management-API
    ```
 
 2. **Create a Virtual Environment**
@@ -76,26 +76,6 @@ A Django-based Leave Management System to handle leave requests and approvals wi
    The application will be available at `http://127.0.0.1:8000/`.
 
 ## Setup
-
-1. **Configure Environment Variables**
-
-   Create a `.env` file in the root directory and add the following:
-
-   ```env
-   DJANGO_SECRET_KEY=your_secret_key
-   DJANGO_DEBUG=True
-   DB_NAME=your_db_name
-   DB_USER=your_db_user
-   DB_PASSWORD=your_db_password
-   DB_HOST=localhost
-   DB_PORT=5432
-   ```
-
-   Ensure to replace the placeholders with your actual values.
-
-2. **Install PostgreSQL or your preferred database**
-
-   Follow the [Django documentation](https://docs.djangoproject.com/en/4.0/ref/settings/#databases) to configure your database settings if you're using something other than SQLite.
 
 ## Running the Application
 
