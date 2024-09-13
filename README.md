@@ -130,10 +130,7 @@ A Django-based Leave Management System to handle leave requests and approvals wi
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
----
 
 For further documentation and API details, refer to the Django REST framework [documentation](https://www.django-rest-framework.org/).
-
-```
 
 Feel free to modify it based on any additional features or specifics of your project!
