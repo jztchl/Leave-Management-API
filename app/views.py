@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
-from app.models import users, leaveRequest
+from app.models import users, leaveRequest, leavelist
 from django.http import HttpResponseForbidden
 from functools import wraps
 
@@ -99,15 +99,15 @@ class ManagerApprove(APIView):
 
             selected_user = users.objects.get(id=selected_leave.employee.id)
             # Ensure the user has a related leavelist
-            leavelist, created = leavelist.objects.get_or_create(employee=selected_user)
+            user_leavelist, created = leavelist.objects.get_or_create(employee=selected_user)
 
             # Update leave balance
-            if leavelist.paidleave < 2:
-                leavelist.paidleave += 1
+            if user_leavelist.paidleave < 2:
+                user_leavelist.paidleave += 1
             else:
-                leavelist.unpaidleave += 1
+                user_leavelist.unpaidleave += 1
 
-            leavelist.save()
+            user_leavelist.save()
 
             msg = {"status": "success"}
             return Response(msg, status=status.HTTP_200_OK)
