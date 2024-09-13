@@ -1,5 +1,4 @@
 from django.urls import path
-from django.urls.conf import include
 from app import views
 
 urlpatterns = [
@@ -10,5 +9,5 @@ urlpatterns = [
     path('manager_view_leaves/', views.Managerlistleaves.as_view(), name='list_leaves_manager'),
     path('manager_approve_leave/<int:id>/', views.ManagerApprove.as_view(), name='approve_leave'),
 
-    path('api-auth/', include('rest_framework.urls')),
+    
 ]
