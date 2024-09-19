@@ -7,6 +7,7 @@ from rest_framework import status
 from app.models import users, leaveRequest, leavelist
 from django.http import HttpResponseForbidden
 from functools import wraps
+from django.db import transaction
 
 def role_required(*roles):
     def decorator(view_func):
@@ -86,28 +87,30 @@ class Managerlistleaves(APIView):
         return Response(msg, status=status.HTTP_200_OK)
     
 
-
 class ManagerApprove(APIView):
     permission_classes = (IsAuthenticated,)
 
     @role_required('MANAGER')
     def patch(self, request, id=None):
         try:
-            selected_leave = leaveRequest.objects.get(id=id)
-            selected_leave.ManagerApproval = True
-            selected_leave.save()
+            with transaction.atomic():
+                # Lock the leave request row to prevent concurrent modifications
+                selected_leave = leaveRequest.objects.select_for_update().get(id=id)
+                selected_leave.ManagerApproval = True
+                selected_leave.save()
 
-            selected_user = users.objects.get(id=selected_leave.employee.id)
-            # Ensure the user has a related leavelist
-            user_leavelist, created = leavelist.objects.get_or_create(employee=selected_user)
+                selected_user = users.objects.select_for_update().get(id=selected_leave.employee.id)
 
-            # Update leave balance
-            if user_leavelist.paidleave < 2:
-                user_leavelist.paidleave += 1
-            else:
-                user_leavelist.unpaidleave += 1
+                # Lock and ensure the user has a related leavelist
+                user_leavelist, created = leavelist.objects.select_for_update().get_or_create(employee=selected_user)
 
-            user_leavelist.save()
+                # Update leave balance with safety check
+                if user_leavelist.paidleave < 2:
+                    user_leavelist.paidleave += 1
+                else:
+                    user_leavelist.unpaidleave += 1
+
+                user_leavelist.save()
 
             msg = {"status": "success"}
             return Response(msg, status=status.HTTP_200_OK)
