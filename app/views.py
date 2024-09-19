@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from app.serializers import usersSerializers, leaveSerializers
+from .serializers import usersSerializers, leaveSerializers
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
-from app.models import users, leaveRequest, leavelist
+from .models import users, leaveRequest, leavelist
 from django.http import HttpResponseForbidden
 from functools import wraps
 from django.db import transaction
@@ -99,7 +99,7 @@ class ManagerApprove(APIView):
                 selected_leave.ManagerApproval = True
                 selected_leave.save()
 
-                selected_user = users.objects.select_for_update().get(id=selected_leave.employee.id)
+                selected_user = users.objects.get(id=selected_leave.employee.id)
 
                 # Lock and ensure the user has a related leavelist
                 user_leavelist, created = leavelist.objects.select_for_update().get_or_create(employee=selected_user)
