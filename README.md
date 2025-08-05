@@ -1,5 +1,7 @@
 
-```markdown
+<p align="center">
+  <img src="/logo.png" alt="Harmony Forge Logo" width="200">
+</p>
 # Leave Management System
 
 A Django-based Leave Management System to handle leave requests and approvals with role-based access.
