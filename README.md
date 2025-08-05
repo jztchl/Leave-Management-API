@@ -1,9 +1,8 @@
 
 <p align="center">
-  <img src="/logo.png" alt="Harmony Forge Logo" width="200">
+  <img src="/logo.png" alt="Leave Management" width="200">
 </p>
-# Leave Management System
-
+<h1 align="center">Leave Management System</h1>
 A Django-based Leave Management System to handle leave requests and approvals with role-based access.
 
 ## Table of Contents
